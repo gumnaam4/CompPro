@@ -418,75 +418,6 @@ const App: React.FC = () => {
           )}
         </div>
 
-        {/* Tab Navigation */}
-        {pdfText && (
-          <div className="glass" style={{ marginBottom: '1.5rem', padding: '4px', borderRadius: 0, display: 'flex', gap: '4px' }}>
-            <button
-              onClick={() => setActiveTab('legislation')}
-              style={{
-                display: 'flex', alignItems: 'center', gap: '8px',
-                padding: '12px 20px', borderRadius: 0,
-                background: activeTab === 'legislation' ? 'var(--card-bg)' : 'transparent',
-                color: activeTab === 'legislation' ? 'var(--text-primary)' : 'var(--text-secondary)',
-                fontWeight: 500,
-              }}
-            >
-              <Database size={18} />
-              Legislation Search
-            </button>
-            <button
-              onClick={() => setActiveTab('compliance')}
-              disabled={!complianceResult}
-              style={{
-                display: 'flex', alignItems: 'center', gap: '8px',
-                padding: '12px 20px', borderRadius: 0,
-                background: activeTab === 'compliance' ? 'var(--card-bg)' : 'transparent',
-                color: activeTab === 'compliance' ? 'var(--text-primary)' : 'var(--text-secondary)',
-                fontWeight: 500,
-                opacity: !complianceResult ? 0.5 : 1,
-                cursor: !complianceResult ? 'not-allowed' : 'pointer',
-              }}
-            >
-              <Shield size={18} />
-              Compliance Check
-              {!complianceResult && (
-                <span style={{ fontSize: '0.75rem', marginLeft: '4px' }}>(Processing...)</span>
-              )}
-            </button>
-          </div>
-        )}
-
-        {/* Content based on active tab */}
-        {activeTab === 'compliance' ? (
-          complianceResult ? (
-            // <ComplianceChecker complianceResult={complianceResult} pdfText={pdfText} />
-            <div>Compliance Checker Placeholder</div>
-          ) : (
-            <div
-              style={{
-                padding: '2rem',
-                borderRadius: 0,
-                border: '1px dashed rgba(255,255,255,0.12)',
-                background: 'rgba(255,255,255,0.02)',
-                textAlign: 'center',
-              }}
-            >
-              <Shield size={48} color="var(--text-secondary)" style={{ margin: '0 auto 1rem', opacity: 0.6 }} />
-              <p style={{ fontSize: '1.1rem', fontWeight: 600, marginBottom: '0.5rem', color: 'var(--text-primary)' }}>
-                Compliance Analysis in Progress
-              </p>
-              <p style={{ color: 'var(--text-secondary)', lineHeight: 1.6 }}>
-                Please wait while we analyze your document for UK company compliance requirements...
-              </p>
-              {pdfText && (
-                <p style={{ fontSize: '0.875rem', marginTop: '0.75rem', color: 'var(--text-secondary)' }}>
-                  Document uploaded successfully. Processing keywords...
-                </p>
-              )}
-            </div>
-          )
-        ) : (
-          <>
             {/* Results toolbar */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
               <h2 style={{ fontSize: '1.3rem', fontWeight: 600 }}>
@@ -605,7 +536,7 @@ const App: React.FC = () => {
             )}
 
             {/* Results grid */}
-            {loading && data.length === 0 ? (
+            {loading ? (
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '2rem' }}>
                 {[1, 2, 3, 4, 5, 6].map(i => (
                   <div key={i} className="premium-card" style={{ height: '220px', background: 'rgba(255,255,255,0.01)' }} />
@@ -634,8 +565,6 @@ const App: React.FC = () => {
                 <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem' }}>No legislation found matching your criteria.</p>
               </div>
             )}
-          </>
-        )}
       </main>
 
       <footer style={{ marginTop: '5rem', borderTop: '1px solid var(--card-border)', paddingTop: '2rem', textAlign: 'center' }}>
